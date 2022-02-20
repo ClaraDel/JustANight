@@ -117,21 +117,10 @@ public class PlayerMovementScript : MonoBehaviour
         currentInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         if (currentInput.sqrMagnitude > 1) currentInput.Normalize();
 
-
-        if(!isFlying)
-        {
-            float velocityY = velocity.y;
-            velocity = (transform.TransformDirection(Vector3.right) * currentInput.x) + (transform.TransformDirection(Vector3.forward) * currentInput.y);
-            velocity *= (isCrouching || isZoomedIn ? crouchSpeed : shouldSprint ? sprintSpeed : walkSpeed);
-            velocity.y = velocityY;
-        }
-        else
-        {
-            velocity.y = 0;
+             velocity.y = 0;
             velocity = (transform.TransformDirection(Vector3.right) * currentInput.x) + (playerCamera.transform.TransformDirection(Vector3.forward) * currentInput.y) + ((transform.TransformDirection(Vector3.up)*(shouldGoUp ? 1 : shouldGoDown ? -1 : 0)));
             velocity *= (shouldSprint ? sprintSpeed : walkSpeed);
-        }
-          
+               
     }
 
     private void HandleJump()
