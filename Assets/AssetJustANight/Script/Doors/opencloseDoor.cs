@@ -2,56 +2,50 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace SojaExiles
 
+public class opencloseDoor : MonoBehaviour
 {
-	public class opencloseDoor : MonoBehaviour
-	{
 
-		public Animator openandclose;
-		public bool open;
-		public Transform Player;
+	[SerializeField] private Animator openandclose;
+	public bool open;
 
-		void Start()
+	private bool openCorouRunning = false;
+	private bool closeCorouRunning = false;
+
+
+	void Start()
 		{
 			open = false;
 		}
 
-		void OnMouseOver()
+		
+	public void Open()
+	{
+		if (!openCorouRunning && !open)
 		{
-			{
-				if (Player)
-				{
-					float dist = Vector3.Distance(Player.position, transform.position);
-					if (dist < 15)
-					{
-						if (open == false)
-						{
-							if (Input.GetMouseButtonDown(0))
-							{
-								StartCoroutine(opening());
-							}
-						}
-						else
-						{
-							if (open == true)
-							{
-								if (Input.GetMouseButtonDown(0))
-								{
-									StartCoroutine(closing());
-								}
-							}
 
-						}
-
-					}
-				}
-
-			}
-
+			StartCoroutine(opening());
+			Invoke("Close", 5f);
+			
 		}
+	}
+	public void Close()
+	{
+		if (!closeCorouRunning && open)
+		{
+			CancelInvoke("Close");
+			StartCoroutine(closing());
+		}
+	}
 
-		IEnumerator opening()
+	private void OnTriggerExit(Collider other)
+	{
+		if (other.gameObject.CompareTag("Player"))
+		{
+			Invoke("Close", 1.0f);
+		}
+	}
+	IEnumerator opening()
 		{
 			print("you are opening the door");
 			openandclose.Play("Opening");
@@ -69,4 +63,3 @@ namespace SojaExiles
 
 
 	}
-}
