@@ -36,17 +36,4 @@ public class LightControl : MonoBehaviour
         }
     }
 
-    /*
-    IEnumerator FlickeringLight()
-    {
-        isFlickering = true;
-        this.gameObject.GetComponent<Light>().enabled = false;
-        timeDelay = Random.Range(0.01f, 0.2f);
-        yield return new WaitForSeconds(timeDelay);
-        this.gameObject.GetComponent<Light>().enabled = true;
-        timeDelay = 2;
-        yield return new WaitForSeconds(timeDelay);
-        isFlickering = false;
-    }*/
-
 }
