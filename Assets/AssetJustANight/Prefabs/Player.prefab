@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5303542268520690456}
   - component: {fileID: 3548129372391861257}
   - component: {fileID: 876213973895623769}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: UI_Elements
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -109,7 +109,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3936747085452828739}
   - component: {fileID: 4201384133235387765}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: UI_Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -187,7 +187,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7056710002778550474}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: CameraOffset
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -222,7 +222,8 @@ GameObject:
   - component: {fileID: 1596605643}
   - component: {fileID: 1596605640}
   - component: {fileID: 256512332842909927}
-  m_Layer: 10
+  - component: {fileID: 1854004059}
+  m_Layer: 11
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -286,7 +287,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 10
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -420,7 +421,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 42f85256718722f418f395b36a658965, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.255
+  m_Volume: 0.116
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -504,6 +505,25 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!95 &1854004059
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7085729971670058605}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 665f57731087c044c84dcbaefad91d34, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7085729971911332379
 GameObject:
   m_ObjectHideFlags: 0
@@ -515,7 +535,7 @@ GameObject:
   - component: {fileID: 7085729971911332378}
   - component: {fileID: 7085729971911332380}
   - component: {fileID: 7085729971911332381}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -597,9 +617,8 @@ GameObject:
   - component: {fileID: 7085729972238849882}
   - component: {fileID: 7085729972238849883}
   - component: {fileID: 976863849}
-  - component: {fileID: 8561700253708949521}
   - component: {fileID: 1011168173547879527}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -731,25 +750,6 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
---- !u!95 &8561700253708949521
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7085729972238849880}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ac72be6df4b509443ab2b5cd9d427e07, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &1011168173547879527
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -766,5 +766,5 @@ MonoBehaviour:
   lookSpeedX: 2
   lookSpeedY: 2
   upperLookLimit: 80
-  lowerLookLimit: 80
+  lowerLookLimit: 18.9
   canLookAround: 1
