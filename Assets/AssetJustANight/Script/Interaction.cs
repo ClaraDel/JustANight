@@ -35,7 +35,6 @@ namespace Assets.AssetJustANight.Script
             if (Physics.Raycast(player.position, player.transform.forward, out hit, range, interactionLayer))
             {
                 GameObject objHit = hit.collider.gameObject;
-                print(hit.distance);
                 if (objHit.CompareTag("Door") && hit.distance < pickUpDistance)
                 {
                     // Tente d'ouvrir la porte si on a utilisé la touche d'interaction
