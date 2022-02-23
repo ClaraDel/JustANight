@@ -64,7 +64,6 @@ public class PlayerMovementScript : MonoBehaviour
     [SerializeField] private float baseStepSpeed = 0.5f;
     [SerializeField] private float crouchStepMultiplier = 1.5f;
     [SerializeField] private float sprintStepMultiplier = 0.6f;
-    [SerializeField] private AudioClip footSteps ;
     private float footStepTimer = 0;
     private float GetCurrentOffsetFootSteps => isCrouching ? baseStepSpeed * crouchStepMultiplier : shouldSprint ? baseStepSpeed * sprintStepMultiplier : baseStepSpeed;
 
