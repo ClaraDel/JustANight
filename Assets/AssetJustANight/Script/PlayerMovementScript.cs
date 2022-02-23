@@ -78,11 +78,11 @@ public class PlayerMovementScript : MonoBehaviour
 
     public void Awake()
     {
+
         playerCamera = GetComponentInChildren<Camera>();
         characterController = GetComponent<CharacterController>();
 
         defaultFOV = playerCamera.fieldOfView;
-        
     }
 
     private void Update()
