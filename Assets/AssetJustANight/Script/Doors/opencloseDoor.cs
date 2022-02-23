@@ -11,7 +11,8 @@ public class opencloseDoor : MonoBehaviour
 
 	private bool openCorouRunning = false;
 	private bool closeCorouRunning = false;
-
+	[SerializeField] private AudioSource ouverture;
+	[SerializeField] private AudioSource fermeture;
 
 	void Start()
 		{
@@ -23,9 +24,9 @@ public class opencloseDoor : MonoBehaviour
 	{
 		if (!openCorouRunning && !open)
 		{
-
+			ouverture.Play();
 			StartCoroutine(opening());
-			Invoke("Close", 5f);
+			Invoke("Close", 15f);
 			
 		}
 	}
@@ -33,6 +34,7 @@ public class opencloseDoor : MonoBehaviour
 	{
 		if (!closeCorouRunning && open)
 		{
+			fermeture.Play();
 			CancelInvoke("Close");
 			StartCoroutine(closing());
 		}

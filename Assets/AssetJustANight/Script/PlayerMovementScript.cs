@@ -65,6 +65,8 @@ public class PlayerMovementScript : MonoBehaviour
     [SerializeField] private float crouchStepMultiplier = 1.5f;
     [SerializeField] private float sprintStepMultiplier = 0.6f;
     private float footStepTimer = 0;
+    public AudioSource footSpeps;
+    public AudioSource run;
     private float GetCurrentOffsetFootSteps => isCrouching ? baseStepSpeed * crouchStepMultiplier : shouldSprint ? baseStepSpeed * sprintStepMultiplier : baseStepSpeed;
 
     // Components needed
@@ -119,6 +121,10 @@ public class PlayerMovementScript : MonoBehaviour
             float velocityY = velocity.y;
             velocity = (transform.TransformDirection(Vector3.right) * currentInput.x) + (transform.TransformDirection(Vector3.forward) * currentInput.y);
             velocity *= (isCrouching || isZoomedIn ? crouchSpeed : shouldSprint ? sprintSpeed : walkSpeed);
+            if (shouldSprint)
+            {
+                run.Play();
+            }
             velocity.y = velocityY;
         }
         else
@@ -256,7 +262,7 @@ public class PlayerMovementScript : MonoBehaviour
 
         if (footStepTimer <= 0)
         {
-            /*SoundManager.Instance.PlayRandomSound(SoundManager.Instance.footStepAudioClips);*/
+            footSpeps.Play();
             footStepTimer = GetCurrentOffsetFootSteps;
         }
 
