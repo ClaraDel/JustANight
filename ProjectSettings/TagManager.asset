@@ -33,6 +33,7 @@ TagManager:
   - Head
   - DoNotClimb
   - Door
+  - object
   layers:
   - Default
   - TransparentFX
@@ -53,7 +54,7 @@ TagManager:
   - PuzzleFeedBackCam
   - ColDrawerOnlyWithPlayer
   - objsFloor
-  - 
+  - Collectable
   - 
   - 
   - 
