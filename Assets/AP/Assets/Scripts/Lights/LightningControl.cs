@@ -6,6 +6,7 @@ public class LightningControl : MonoBehaviour
 {
     float timeDelay;
     float delayBetweenLightning;
+    public float delayFirstLightning = 3.39f;
     public GameObject[] groupWindows;
     private List<Renderer> renderers;
 
@@ -29,6 +30,10 @@ public class LightningControl : MonoBehaviour
         StartCoroutine(createLightning());
         audioSource = gameObject.GetComponent<AudioSource>();
 
+        StartCoroutine(firstLightning());
+
+
+        
 
 
     }
@@ -37,6 +42,18 @@ public class LightningControl : MonoBehaviour
     void Update()
     {
 
+    }
+
+    IEnumerator firstLightning()
+    {
+        yield return new WaitForSeconds(delayFirstLightning);
+        StartCoroutine(emitLight());
+        yield return new WaitForSeconds(1.4f);
+        if (soundLightning != null)
+        {
+            audioSource.PlayOneShot(soundLightning, 1f);
+
+        }
     }
 
     void changeMaterial(Color color)
