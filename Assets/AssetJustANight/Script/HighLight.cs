@@ -5,6 +5,7 @@ using UnityEngine;
 public class HighLight : MonoBehaviour
 {
     Color default_color;
+    [SerializeField] GameObject sprite;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,6 +16,15 @@ public class HighLight : MonoBehaviour
     void Update()
     {
 
+    }
+
+    public void DeActivate()
+    {
+        sprite.SetActive(false);
+    }
+    public void Activate()
+    {
+        sprite.SetActive(true);
     }
     public void OnRayCastExit()
     {
