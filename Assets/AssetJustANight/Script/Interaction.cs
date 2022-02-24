@@ -5,7 +5,7 @@ namespace Assets.AssetJustANight.Script
 {
     public class Interaction : MonoBehaviour
     {
-
+        [SerializeField] Material color;
         public LayerMask interactionLayer;
         GameObject lastHit;
         RaycastHit hit;
@@ -14,6 +14,7 @@ namespace Assets.AssetJustANight.Script
         public float pickUpDistance = 3.0f;
 
         [SerializeField] Transform player;
+        [SerializeField] Camera cam;
 
         // Use this for initialization
         void Start()
@@ -31,21 +32,63 @@ namespace Assets.AssetJustANight.Script
         // Update is called once per frame
         private void FixedUpdate()
         {
-            
-            if (Physics.Raycast(player.position, player.transform.forward, out hit, range, interactionLayer))
+            //Crée un vecteur au centre de la vue de la caméra
+            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit, range, interactionLayer))
             {
                 GameObject objHit = hit.collider.gameObject;
+                if ((lastHit != null) && (lastHit != hit.collider.gameObject) && (lastHit.layer == LayerMask.NameToLayer("Collectable")))
+                {
+                    lastHit.GetComponent<HighLight>().OnRayCastExit();
+                }
+                // ..ou si l'on est trop loin de celui-ci
+                if (objHit.layer == LayerMask.NameToLayer("Collectable") && hit.distance > pickUpDistance)
+                {
+                    objHit.GetComponent<HighLight>().OnRayCastExit();
+                }
+                if (objHit.CompareTag("object"))
+                {
+                    // Vérifie que l'on ne soit pas trop éloigné
+                    if (hit.distance < pickUpDistance)
+                    {
+                        //Change material de l'objets
+                        Renderer rend = objHit.GetComponent<Renderer>();
+                        rend.material.color = color.color;
+                        print("ok");
+                        // Ramasse l'objet si on a utilisé la touche d'interaction
+                        if (interaction)
+                        {
+                            Collectables.Instance.AddObject(objHit.name);
+                            print("Item " + objHit.name + " collecté");
+                            Destroy(objHit);
+                            //UITextManager.Instance.PrintText("Item " + objHit.name + " collecté");
+                        }
+                    }
+                }
                 if (objHit.CompareTag("Door") && hit.distance < pickUpDistance)
                 {
                     // Tente d'ouvrir la porte si on a utilisé la touche d'interaction
                     if (interaction)
                     {
                         objHit.GetComponent<opencloseDoor>().Open();
-                        interaction = false;
-                      
+
+
                     }
                 }
+                lastHit = objHit;
             }
+            else
+            {
+                // Si on a rien touché et que l'ancien objet touché était un collectable, remet son material par défaut
+                if (lastHit != null && lastHit.layer == LayerMask.NameToLayer("Collectable"))
+                {
+                    lastHit.GetComponent<HighLight>().OnRayCastExit();
+                    lastHit = null;
+                }
+            }
+            interaction = false;
         }
     }
+           
 }
