@@ -1,5 +1,7 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 namespace Assets.AssetJustANight.Script
 {
@@ -15,6 +17,10 @@ namespace Assets.AssetJustANight.Script
 
         [SerializeField] Transform player;
         [SerializeField] Camera cam;
+        [SerializeField] private GameObject objectifPrefab;
+        [SerializeField] private GameObject panel;
+
+        private bool activate=false;
 
         // Use this for initialization
         void Start()
@@ -84,6 +90,27 @@ namespace Assets.AssetJustANight.Script
                     }
                     
                 }
+                if (objHit.CompareTag("HouseDoor") && hit.distance < pickUpDistance)
+                {
+                    if (Collectables.Instance.CheckObject("rust_key")&& Collectables.Instance.CheckObject("flashlight") && Collectables.Instance.CheckObject("battery"))
+                    {
+                        
+                        objHit.GetComponentInChildren<HighLight>().Activate();
+                        // Tente d'ouvrir la porte si on a utilisé la touche d'interaction
+                        if (interaction)
+                        {
+                            objHit.GetComponentInChildren<HighLight>().DeActivate();
+                            objHit.GetComponent<opencloseDoor>().Open();
+
+
+                        }
+                    } else
+                    {
+                        PublishMessage();
+                        
+                    }
+
+                }
                 lastHit = objHit;
             }
             else
@@ -98,6 +125,19 @@ namespace Assets.AssetJustANight.Script
             }
             interaction = false;
         }
+
+        void PublishMessage()
+        {
+            if (!activate)
+            {
+                GameObject Message = Instantiate(objectifPrefab, panel.transform.position, new Quaternion(0, 0, 0, 0), panel.transform);
+                Message.GetComponentInChildren<TMP_Text>().text = "You can't go outside";
+                Destroy(Message, 8f);
+                activate = true;
+            }
+        }
+        
     }
-           
+
+
 }
