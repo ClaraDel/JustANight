@@ -2,12 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Grenier : MonoBehaviour
 {
-    [SerializeField] string textToDisplay;
-    [SerializeField] Text textArea;
+    [SerializeField] private GameObject objectifPrefab;
+    [SerializeField] private GameObject panel;
 
+    private GameObject Message;
+
+    [SerializeField] GameObject _Monster;
 
     private bool isActivated = false;
     private bool hasBeenActivated = false;
@@ -19,16 +23,14 @@ public class Grenier : MonoBehaviour
 
     void Update()
     {
-        //if (objectif rempli && isActivated )
-        //{
-        //Deactivate();
-        //}
+        
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("Player") && !isActivated && !hasBeenActivated)
         {
+
            Apparition();
         }
     }
@@ -36,21 +38,18 @@ public class Grenier : MonoBehaviour
     private void Apparition()
     {
         //Instantiate monster prefab
-        //play animation
-        //if monster touch player -> reset game
-    }
-
-    public void Activate()
-    {
+        _Monster.SetActive(true);
+        Message = Instantiate(objectifPrefab, panel.transform.position, new Quaternion(0, 0, 0, 0), panel.transform);
+        Message.GetComponentInChildren<TMP_Text>().text = "Run in your bedroom and hide yourself in the closet";
         isActivated = true;
-        textArea.text = textToDisplay;
-        textArea.gameObject.SetActive(true);
     }
 
-    private void Deactivate()
+    
+
+    public void Deactivate()
     {
         hasBeenActivated = true;
-        textArea.gameObject.SetActive(false);
-        this.gameObject.SetActive(false);
+        Destroy(Message);
+        Destroy(_Monster);
     }
 }
