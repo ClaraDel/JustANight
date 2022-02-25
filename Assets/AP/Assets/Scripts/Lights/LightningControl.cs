@@ -6,19 +6,34 @@ public class LightningControl : MonoBehaviour
 {
     float timeDelay;
     float delayBetweenLightning;
-    public GameObject groupWindow;
-    Renderer renderer;
+    public float delayFirstLightning = 3.39f;
+    public GameObject[] groupWindows;
+    private List<Renderer> renderers;
+
+
     private AudioSource audioSource;
     public AudioClip soundLightning;
+
+    public GameObject lightSource1;
+    public GameObject lightSource2;
+
 
 
     // Start is called before the first frame update
     void Start()
     {
-        renderer = groupWindow.GetComponent<Renderer>();
+        renderers = new List<Renderer>();
+        for(int i = 0; i < groupWindows.Length; i++)
+        {
+            renderers.Add(groupWindows[i].GetComponent<Renderer>());
+        }
         StartCoroutine(createLightning());
         audioSource = gameObject.GetComponent<AudioSource>();
 
+        StartCoroutine(firstLightning());
+
+
+        
 
 
     }
@@ -26,6 +41,31 @@ public class LightningControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+    }
+
+    IEnumerator firstLightning()
+    {
+        yield return new WaitForSeconds(delayFirstLightning);
+        StartCoroutine(emitLight());
+        yield return new WaitForSeconds(1.4f);
+        if (soundLightning != null)
+        {
+            audioSource.PlayOneShot(soundLightning, 1f);
+
+        }
+    }
+
+    void changeMaterial(Color color)
+    {
+        if(renderers.Count != 0)
+        {
+            for (int i = 0; i < groupWindows.Length; i++)
+            {
+                renderers[i].material.SetColor("_EmissionColor", color);
+            }
+        }
+        
 
     }
 
@@ -37,7 +77,11 @@ public class LightningControl : MonoBehaviour
             yield return new WaitForSeconds(delayBetweenLightning);
             StartCoroutine(emitLight());
             yield return new WaitForSeconds(1.4f);
-            audioSource.PlayOneShot(soundLightning, 1f);
+            if(soundLightning != null)
+            {
+                audioSource.PlayOneShot(soundLightning, 1f);
+
+            }
         }
 
     }
@@ -49,22 +93,41 @@ public class LightningControl : MonoBehaviour
     IEnumerator emitLight()
     {
         // first light
-        renderer.material.SetColor("_EmissionColor", Color.white);
+        changeMaterial(Color.white);
         this.gameObject.GetComponent<Light>().enabled = true;
+        lightSource1.GetComponent<Light>().enabled = true;
+        lightSource2.GetComponent<Light>().enabled = true;
+
         timeDelay = Random.Range(0.01f,0.1f);
         yield return new WaitForSeconds(timeDelay);
         this.gameObject.GetComponent<Light>().enabled = false;
-        renderer.material.SetColor("_EmissionColor", Color.clear);
+        lightSource1.GetComponent<Light>().enabled = false;
+        lightSource2.GetComponent<Light>().enabled = false;
+
+
+        changeMaterial(Color.clear);
+
 
         //Second light
         timeDelay = Random.Range(0.01f, 0.1f);
         yield return new WaitForSeconds(timeDelay);
         this.gameObject.GetComponent<Light>().enabled = true;
-        renderer.material.SetColor("_EmissionColor", Color.white);
+        lightSource1.GetComponent<Light>().enabled = true;
+        lightSource2.GetComponent<Light>().enabled = true;
+
+
+        changeMaterial(Color.white);
+
         timeDelay = Random.Range(0.8f, 1.2f);
         yield return new WaitForSeconds(timeDelay);
         this.gameObject.GetComponent<Light>().enabled = false;
-        renderer.material.SetColor("_EmissionColor", Color.clear);
+        lightSource1.GetComponent<Light>().enabled = false;
+        lightSource2.GetComponent<Light>().enabled = false;
+
+
+
+        changeMaterial(Color.clear);
+
 
     }
 }
