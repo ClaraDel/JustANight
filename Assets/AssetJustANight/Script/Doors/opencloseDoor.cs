@@ -7,7 +7,7 @@ public class opencloseDoor : MonoBehaviour
 {
 
 	[SerializeField] private Animator openandclose;
-	public bool open;
+	public bool open= false;
 
 	private bool openCorouRunning = false;
 	private bool closeCorouRunning = false;
@@ -16,16 +16,26 @@ public class opencloseDoor : MonoBehaviour
 
 	void Start()
 		{
-			open = false;
 		}
 
-		
+	public void InteractionDoor()
+    {
+        if (!open)
+        {
+			Open();
+        } else
+        {
+			Close();
+        }
+    }	
 	public void Open()
 	{
 		if (!openCorouRunning && !open)
 		{
 			ouverture.Play();
+			closeCorouRunning = true;
 			StartCoroutine(opening());
+			closeCorouRunning = false;
 			Invoke("Close", 15f);
 			
 		}
@@ -36,7 +46,9 @@ public class opencloseDoor : MonoBehaviour
 		{
 			fermeture.Play();
 			CancelInvoke("Close");
+			closeCorouRunning = true;
 			StartCoroutine(closing());
+			closeCorouRunning = false;
 		}
 	}
 
@@ -55,7 +67,7 @@ public class opencloseDoor : MonoBehaviour
 			yield return new WaitForSeconds(.5f);
 		}
 
-		IEnumerator closing()
+	IEnumerator closing()
 		{
 			print("you are closing the door");
 			openandclose.Play("Closing");

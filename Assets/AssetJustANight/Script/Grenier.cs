@@ -28,7 +28,7 @@ public class Grenier : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player") && !isActivated && !hasBeenActivated)
+        if (other.gameObject.CompareTag("Player") && !isActivated && !hasBeenActivated && Collectables.Instance.CheckObject("flashlight") && Collectables.Instance.CheckObject("battery"))
         {
 
            Apparition();
@@ -40,7 +40,7 @@ public class Grenier : MonoBehaviour
         //Instantiate monster prefab
         _Monster.SetActive(true);
         Message = Instantiate(objectifPrefab, panel.transform.position, new Quaternion(0, 0, 0, 0), panel.transform);
-        Message.GetComponentInChildren<TMP_Text>().text = "Run in your bedroom and hide yourself in the closet";
+        Message.GetComponentInChildren<TMP_Text>().text = "Locked yourself in your room !!!";
         isActivated = true;
     }
 
