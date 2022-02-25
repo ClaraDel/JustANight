@@ -9,8 +9,13 @@ public class ChambreParent : MonoBehaviour
     [SerializeField] private GameObject panel;
     [SerializeField] private GameObject enfant;
 
+    [SerializeField] private GameObject sousTitrePrefab;
+    [SerializeField] private GameObject panelTitre;
+
+
     private GameObject Message;
     private GameObject Message_1;
+    private GameObject sous_titre;
 
     private bool isActivated = false;
     private bool hasBeenActivated = false;
@@ -23,16 +28,24 @@ public class ChambreParent : MonoBehaviour
     {
         if (Message_1!=null && Collectables.Instance.CheckObject("rust_key"))
         {
-            Message_1.GetComponentInChildren<TMP_Text>().text = "it's too dark outside";
+           
+            sous_titre.GetComponentInChildren<TMP_Text>().text = "it's too dark outside";
+            Message_1.GetComponentInChildren<TMP_Text>().text = "look for the flashlight";
+            Invoke("DeleteMessage", 8f);
         }
         if (Message_1 != null && Collectables.Instance.CheckObject("flashlight"))
         {
-            Message_1.GetComponentInChildren<TMP_Text>().text = "oh no, the flashlight has run out of battery";
+            sous_titre.GetComponentInChildren<TMP_Text>().text = "oh no, the flashlight has run out of battery";
+            Message_1.GetComponentInChildren<TMP_Text>().text = "You have to find the battery";
+            Invoke("DeleteMessage", 8f);
         }
         if (Message_1 != null && Collectables.Instance.CheckObject("battery") && Collectables.Instance.CheckObject("battery (1)"))
         {
             Destroy(Message_1);
-            Message.GetComponentInChildren<TMP_Text>().text = "You have everything, you can now go outside";
+          
+            sous_titre.GetComponentInChildren<TMP_Text>().text = "I can go see if my parents are outside";
+            Message.GetComponentInChildren<TMP_Text>().text = "Go outside";
+            Invoke("DeleteMessage", 8f);
         }
     }
 
@@ -49,14 +62,23 @@ public class ChambreParent : MonoBehaviour
         enfant.GetComponentInChildren<Chambre>().Deactivate();
         Message = Instantiate(objectifPrefab, panel.transform.position, new Quaternion(0, 0, 0, 0), panel.transform);
         Message.GetComponentInChildren<TMP_Text>().text = "You have to check outside";
+        sous_titre = Instantiate(sousTitrePrefab, panelTitre.transform.position, new Quaternion(0, 0, 0, 0), panelTitre.transform);
+        sous_titre.GetComponentInChildren<TMP_Text>().text = "I need the key to go outside";
+        Invoke("DeleteMessage", 8f);
         Message_1 = Instantiate(objectifPrefab, panel.transform.position, new Quaternion(0, 0, 0, 0), panel.transform);
-        Message_1.GetComponentInChildren<TMP_Text>().text = "You need the key ";
+        Message_1.GetComponentInChildren<TMP_Text>().text = "Find the key ";
         isActivated = true;
+       
     }
 
     private void Deactivate()
     {
         Destroy(Message);
         hasBeenActivated = true;
+    }
+
+    void DeleteMessage()
+    {
+        sous_titre.GetComponentInChildren<TMP_Text>().text = "";
     }
 }
