@@ -84,8 +84,8 @@ namespace Assets.AssetJustANight.Script
                     if (interaction)
                     {
                         objHit.GetComponentInChildren<HighLight>().DeActivate();
-                        objHit.GetComponent<opencloseDoor>().Open();
-                        
+                        objHit.GetComponent<opencloseDoor>().InteractionDoor();
+
 
                     }
                     

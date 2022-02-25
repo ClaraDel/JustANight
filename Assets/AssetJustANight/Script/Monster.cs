@@ -8,13 +8,11 @@ public class Monster : MonoBehaviour
 {
     [SerializeField] private GameObject player;
     [SerializeField] private NavMeshAgent navMeshAgent;
-    [SerializeField] private AudioSource audioSource;
+    
     [SerializeField] private float lookRadius = 17f;
     [SerializeField] private Animator animator;
     [SerializeField]  private LayerMask layerMask;
     public bool seesPlayer = false;
-    public float hitFrequency = 1.0f;
-    private float hitDelta = 0.0f;
     private float TimeWalk = 0.0f;
     private float rotationSpeed = 0.9f;
     private float distanceWithPlayer;
@@ -22,6 +20,12 @@ public class Monster : MonoBehaviour
     float curSpeed;
     private Transform target;
     private Scene scene;
+
+    //Audio
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] AudioClip[] attackClips;
+    [SerializeField] AudioClip[] footClips;
+    private float footStepTimer = 0;
 
     protected enum State
     {
@@ -56,9 +60,11 @@ public class Monster : MonoBehaviour
         switch (currentState)
         {
             case State.Idle:
+                animator.Play("Idle");
                 IdleState();
                 break;
             case State.Chase:
+                animator.Play("Crawl");
                 ChaseState();
                 break;
             case State.Attack:
@@ -66,7 +72,6 @@ public class Monster : MonoBehaviour
                 break;
         }
     }
-
     private void FixedUpdate()
     {
         Vector3 curMove = transform.position - previousPosition;
@@ -76,7 +81,7 @@ public class Monster : MonoBehaviour
 
     void faceTarget()
     {
-        Vector3 direction = (target.position - transform.position).normalized;
+       Vector3 direction = (target.position - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 2f);
 
@@ -85,28 +90,6 @@ public class Monster : MonoBehaviour
 
     void IdleState()
     {
-        TimeWalk += Time.deltaTime;
-        if (TimeWalk <= 3)
-        {
-            transform.Translate(Vector3.forward * 2 * Time.deltaTime);
-
-
-        }
-        else if (TimeWalk >= 4 && TimeWalk <= 5)
-        {
-            transform.Rotate(Vector3.up * Random.Range(90, 180) * rotationSpeed * Time.deltaTime);
-
-        }
-        else if (TimeWalk >= 6)
-        {
-            TimeWalk = 0.0f;
-        }
-
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 2))
-        {
-            transform.Rotate(Vector3.up * Random.Range(90, 220) * rotationSpeed * Time.deltaTime);
-        }
 
         if (distanceWithPlayer <= lookRadius)
         {
@@ -123,6 +106,7 @@ public class Monster : MonoBehaviour
             currentState = State.Idle;
             return;
         }
+        print(distanceWithPlayer);
         if (distanceWithPlayer <= navMeshAgent.stoppingDistance)
         {
             //attack the target
@@ -146,25 +130,14 @@ public class Monster : MonoBehaviour
             currentState = State.Idle;
             return;
         }
-
         //check distance 
         if (distanceWithPlayer <= lookRadius && distanceWithPlayer >= navMeshAgent.stoppingDistance)
         {
             currentState = State.Chase;
         }
 
-        faceTarget();
-
-        //hit the player, accounting the frequency
-        if (hitDelta > hitFrequency )
-        {
-            Hit();
-            hitDelta = 0.0f;
-        }
-        else
-        {
-            hitDelta += Time.deltaTime;
-        }
+        //faceTarget();
+        else { Hit(); }
     }
 
     void Hit()
