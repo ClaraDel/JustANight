@@ -1,11 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 
 public class Monster : MonoBehaviour
 {
+
+    [SerializeField] GameObject loadingScreen;
+    [SerializeField] Slider slider;
+    [SerializeField] Text progressText;
+
     [SerializeField] private GameObject player;
     [SerializeField] private NavMeshAgent navMeshAgent;
     
@@ -142,7 +148,21 @@ public class Monster : MonoBehaviour
 
     void Hit()
     {
+        StartCoroutine(LoadAsync(scene.name));
         SceneManager.LoadScene(scene.name);
 
+    }
+
+    IEnumerator LoadAsync(string sceneName)
+    {
+        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
+        loadingScreen.SetActive(true);
+        while (!operation.isDone)
+        {
+            float progress = Mathf.Clamp01(operation.progress / 0.9f);
+            slider.value = progress;
+            progressText.text = progress * 100 + "%";
+            yield return null;
+        }
     }
 }
