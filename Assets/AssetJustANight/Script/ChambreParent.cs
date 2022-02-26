@@ -28,9 +28,8 @@ public class ChambreParent : MonoBehaviour
     {
         if (Message_1!=null && Collectables.Instance.CheckObject("rust_key"))
         {
-           
-            sous_titre.GetComponentInChildren<TMP_Text>().text = "it's too dark outside";
-            Message_1.GetComponentInChildren<TMP_Text>().text = "look for the flashlight";
+          
+            Message_1.GetComponentInChildren<TMP_Text>().text = "it's too dark outside,look for the flashlight";
             Invoke("DeleteMessage", 8f);
         }
         if (Message_1 != null && Collectables.Instance.CheckObject("flashlight"))
@@ -46,6 +45,7 @@ public class ChambreParent : MonoBehaviour
             sous_titre.GetComponentInChildren<TMP_Text>().text = "I can go see if my parents are outside";
             Message.GetComponentInChildren<TMP_Text>().text = "Go outside";
             Invoke("DeleteMessage", 8f);
+            Invoke("Deactivate", 4f);
         }
     }
 
@@ -60,10 +60,10 @@ public class ChambreParent : MonoBehaviour
     public void Activate()
     {
         enfant.GetComponentInChildren<Chambre>().Deactivate();
-        Message = Instantiate(objectifPrefab, panel.transform.position, new Quaternion(0, 0, 0, 0), panel.transform);
-        Message.GetComponentInChildren<TMP_Text>().text = "You have to check outside";
         sous_titre = Instantiate(sousTitrePrefab, panelTitre.transform.position, new Quaternion(0, 0, 0, 0), panelTitre.transform);
-        sous_titre.GetComponentInChildren<TMP_Text>().text = "I need the key to go outside";
+        sous_titre.GetComponentInChildren<TMP_Text>().text = "There are not here... Maybe outside ?";
+        Message = Instantiate(objectifPrefab, panel.transform.position, new Quaternion(0, 0, 0, 0), panel.transform);
+        Message.GetComponentInChildren<TMP_Text>().text = "You have to check outside, you need to find the key";
         Invoke("DeleteMessage", 8f);
         Message_1 = Instantiate(objectifPrefab, panel.transform.position, new Quaternion(0, 0, 0, 0), panel.transform);
         Message_1.GetComponentInChildren<TMP_Text>().text = "Find the key ";

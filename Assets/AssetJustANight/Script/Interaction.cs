@@ -101,7 +101,7 @@ namespace Assets.AssetJustANight.Script
                         {
                             objHit.GetComponentInChildren<HighLight>().DeActivate();
                             objHit.GetComponent<opencloseDoor>().Open();
-
+                            objHit.GetComponent<End>().Fin();
 
                         }
                     } else
