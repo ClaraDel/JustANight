@@ -15,9 +15,9 @@ public class End : MonoBehaviour
 
     public float timeShown ;
     private GameObject sous_titre;
-    private string[] conversation ={"Mom:What are you doing up at this hour","Julien: I was looking for you but you weren't there",
-        "Dad: What are you saying we were in our room","Julien: But no i was ...","MOM: go to bed", "Julien:I SAW A MONSTER !!",
-        "MOM: What are you saying monster aren't real" };
+    private string[] conversation ={"Mom : Julien, what are you doing up at this hour ?","I was looking for you, but you weren't there",
+        "Dad: What are you saying ? We were in our room !","But no i was ...","Mom : go to bed, Julien.", "But.. I saw a monster !!",
+        "MOM: What are you saying ? monster aren't real !" };
     private string message = "";
     // Start is called before the first frame update
     void Start()
@@ -43,27 +43,27 @@ public class End : MonoBehaviour
     void Display_1()
     {
         sous_titre.GetComponentInChildren<TMP_Text>().text = conversation[1];
-        Invoke("Display_2", 8f);
+        Invoke("Display_2", 5f);
     }
     void Display_2()
     {
         sous_titre.GetComponentInChildren<TMP_Text>().text = conversation[2];
-        Invoke("Display_3", 10f);
+        Invoke("Display_3", 4f);
     }
     void Display_3()
     {
         sous_titre.GetComponentInChildren<TMP_Text>().text = conversation[3];
-        Invoke("Display_4", 4f);
+        Invoke("Display_4", 3f);
     }
     void Display_4()
     {
         sous_titre.GetComponentInChildren<TMP_Text>().text = conversation[4];
-        Invoke("Display_5", 4f);
+        Invoke("Display_5", 3f);
     }
     void Display_5()
     {
         sous_titre.GetComponentInChildren<TMP_Text>().text = conversation[5];
-        Invoke("Display_6", 4f);
+        Invoke("Display_6", 3f);
     }
     void Display_6()
     {

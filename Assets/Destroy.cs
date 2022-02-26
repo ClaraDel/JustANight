@@ -7,6 +7,8 @@ public class Destroy : StateMachineBehaviour
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
 override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 {
+        Debug.Log(animator.gameObject.GetComponentInChildren<MouseLook>());
+        Debug.Log(animator.gameObject.GetComponent<Animator>().enabled);
         animator.gameObject.GetComponentInChildren<MouseLook>().enabled = true;
         animator.gameObject.GetComponent<Animator>().enabled = false;
         Destroy(animator.gameObject.GetComponent<Animator>());

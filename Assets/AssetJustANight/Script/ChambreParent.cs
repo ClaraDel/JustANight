@@ -45,7 +45,6 @@ public class ChambreParent : MonoBehaviour
             sous_titre.GetComponentInChildren<TMP_Text>().text = "I can go see if my parents are outside";
             Message.GetComponentInChildren<TMP_Text>().text = "Go outside";
             Invoke("DeleteMessage", 8f);
-            Invoke("Deactivate", 4f);
         }
     }
 
@@ -63,7 +62,7 @@ public class ChambreParent : MonoBehaviour
         sous_titre = Instantiate(sousTitrePrefab, panelTitre.transform.position, new Quaternion(0, 0, 0, 0), panelTitre.transform);
         sous_titre.GetComponentInChildren<TMP_Text>().text = "There are not here... Maybe outside ?";
         Message = Instantiate(objectifPrefab, panel.transform.position, new Quaternion(0, 0, 0, 0), panel.transform);
-        Message.GetComponentInChildren<TMP_Text>().text = "You have to check outside, you need to find the key";
+        Message.GetComponentInChildren<TMP_Text>().text = "You have to check outside";
         Invoke("DeleteMessage", 8f);
         Message_1 = Instantiate(objectifPrefab, panel.transform.position, new Quaternion(0, 0, 0, 0), panel.transform);
         Message_1.GetComponentInChildren<TMP_Text>().text = "Find the key ";
