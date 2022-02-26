@@ -46,7 +46,8 @@ public class Monster : MonoBehaviour
     void Start()
     {
         target = player.transform;
-        scene = SceneManager.GetActiveScene(); 
+        scene = SceneManager.GetActiveScene();
+        IdleState();
         
     }
 
@@ -66,11 +67,9 @@ public class Monster : MonoBehaviour
         switch (currentState)
         {
             case State.Idle:
-                animator.Play("Idle");
                 IdleState();
                 break;
             case State.Chase:
-                animator.Play("Crawl");
                 ChaseState();
                 break;
             case State.Attack:
@@ -96,46 +95,15 @@ public class Monster : MonoBehaviour
 
     void IdleState()
     {
-
-        if (distanceWithPlayer <= lookRadius)
-        {
-            seesPlayer = true;
-            currentState = State.Chase;
-
-        }
+        animator.Play("Idle");
+            Invoke("ChaseState", 1.0f);
     }
 
      void ChaseState()
     {
-        if (seesPlayer == false)
-        {
-            currentState = State.Idle;
-            return;
-        }
-        print(distanceWithPlayer);
-        if (distanceWithPlayer <= navMeshAgent.stoppingDistance)
-        {
-            //attack the target
-            currentState = State.Attack;
-
-        }
-        else
-        {
-
-            navMeshAgent.SetDestination(target.position);
-
-            faceTarget();
-        }
-    }
-
-    void AttackState()
-    {
-        //Check the player visibility
-        if (seesPlayer == false)
-        {
-            currentState = State.Idle;
-            return;
-        }
+        animator.Play("Crawl");
+        navMeshAgent.SetDestination(target.position);
+        faceTarget();
         //check distance 
         if (distanceWithPlayer <= lookRadius && distanceWithPlayer >= navMeshAgent.stoppingDistance)
         {
@@ -144,6 +112,18 @@ public class Monster : MonoBehaviour
 
         //faceTarget();
         else { Hit(); }
+    }
+
+    IEnumerator wait()
+    {
+        yield return new WaitForSeconds(1f);
+    }
+
+
+    void AttackState()
+    {
+        //Check the player visibility
+
     }
 
     void Hit()

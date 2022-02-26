@@ -69,7 +69,6 @@ public class FlickeringControl : MonoBehaviour
         timeDelay = Random.Range(0.01f, 0.2f);
         PlaySoundInterval(0.33f, 0.33f + timeDelay);
         renderer1.material.SetColor("_EmissionColor", Color.black);
-        renderer2.material.SetColor("_EmissionColor", Color.black);
 
         yield return new WaitForSeconds(timeDelay);  
         
@@ -77,7 +76,6 @@ public class FlickeringControl : MonoBehaviour
         timeDelay = Random.Range(0.01f, 0.2f);
         PlaySoundInterval(0.33f, 0.33f + timeDelay);
         renderer1.material.SetColor("_EmissionColor", originalColor);
-        renderer2.material.SetColor("_EmissionColor", originalColor);
 
         yield return new WaitForSeconds(timeDelay);
 
@@ -85,14 +83,12 @@ public class FlickeringControl : MonoBehaviour
         timeDelay = Random.Range(0.01f, 0.2f);
         PlaySoundInterval(0.33f, 0.33f + timeDelay);
         renderer1.material.SetColor("_EmissionColor", Color.black);
-        renderer2.material.SetColor("_EmissionColor", Color.black);
 
         yield return new WaitForSeconds(timeDelay);
 
         this.gameObject.GetComponent<Light>().enabled = true;
         timeDelay = Random.Range(1f, 4f);
         renderer1.material.SetColor("_EmissionColor", originalColor);
-        renderer2.material.SetColor("_EmissionColor", originalColor);
 
         yield return new WaitForSeconds(timeDelay);
 

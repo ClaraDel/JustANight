@@ -12,6 +12,7 @@ public class Grenier : MonoBehaviour
     private GameObject Message;
 
     [SerializeField] GameObject _Monster;
+    [SerializeField] GameObject CameraOffset;
 
     private bool isActivated = false;
     private bool hasBeenActivated = false;
@@ -30,8 +31,7 @@ public class Grenier : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player") && !isActivated && !hasBeenActivated && Collectables.Instance.CheckObject("flashlight") && Collectables.Instance.CheckObject("battery"))
         {
-
-           Apparition();
+            Apparition();
         }
     }
 
@@ -39,8 +39,11 @@ public class Grenier : MonoBehaviour
     {
         //Instantiate monster prefab
         _Monster.SetActive(true);
+        CameraOffset.GetComponent<Animator>().Play("TrunHeadMonster");
         Message = Instantiate(objectifPrefab, panel.transform.position, new Quaternion(0, 0, 0, 0), panel.transform);
-        Message.GetComponentInChildren<TMP_Text>().text = "Locked yourself in your room !!!";
+        Message.GetComponentInChildren<TMP_Text>().text = "Lock yourself in your room !!!";
+        gameObject.GetComponents<AudioSource>()[0].Play();
+        gameObject.GetComponents<AudioSource>()[1].Play();
         isActivated = true;
     }
 

@@ -11,20 +11,29 @@ public class Closet : MonoBehaviour
 
     private bool isActivated = false;
     private bool hasBeenActivated = false;
+    private bool inside = false;
 
     private void Start()
     {
         door =_Door.GetComponentInChildren<opencloseDoor>();
     }
+    private void Update()
+    {
+        if (inside && !door.open)
+        {
+            Desactivate(); 
+        }
+    }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player") && !isActivated && !hasBeenActivated && _Monster.activeInHierarchy && !door.open)
+        if (other.gameObject.CompareTag("Player") && !isActivated && !hasBeenActivated && _Monster.activeInHierarchy)
         {
-            Activate();
+            inside = true;
+            
         }
     }
 
-    public void Activate()
+    public void Desactivate()
     {
         _grenier.GetComponentInChildren<Grenier>().Deactivate();
         isActivated = true;

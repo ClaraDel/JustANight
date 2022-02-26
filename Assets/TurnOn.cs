@@ -15,6 +15,8 @@ public class TurnOn : MonoBehaviour
     IEnumerator turnOn()
     {
         yield return new WaitForSeconds(11f);
+        gameObject.GetComponent<AudioSource>().Play();
         gameObject.GetComponent<Light>().intensity = 2.5f;
+        
     }
 }
