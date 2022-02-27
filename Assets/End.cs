@@ -73,7 +73,7 @@ public class End : MonoBehaviour
     void Black()
     {
         canvas.SetActive(true);
-        Invoke("Quit", 10f);
+        //Invoke("Quit", 10f);
     }
 
     private void Quit()

@@ -161,7 +161,7 @@ public class MenuManager : MonoBehaviour
 	{
 
 		//uses the p button to pause and unpause the game
-		if ((Input.GetKeyDown(KeyCode.P) && canPause) || startingGame)
+		if ((Input.GetKeyDown(KeyCode.Escape) && canPause) || startingGame)
 		{
             if (startingGame)
             {
@@ -250,7 +250,6 @@ public class MenuManager : MonoBehaviour
 	{
 
 		Application.Quit();
-		UnityEditor.EditorApplication.isPlaying = false;
 	}
 
 	public void openExitPopup()
