@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class MenuManager : MonoBehaviour
 	[SerializeField] GameObject exitPopup;
 
 	[SerializeField] GameObject mainMenu;
+	[SerializeField] GameObject mainMenu1;
 	[SerializeField] GameObject settings;
 
 	[SerializeField] TMP_Text textVolume;
@@ -23,6 +25,8 @@ public class MenuManager : MonoBehaviour
 	float brightness;
 	[SerializeField] Camera cameraPlayer;
 	[SerializeField] GameObject background;
+
+	[SerializeField] GameObject player;
 
 	[SerializeField] TMP_Text textBrightness;
 	[SerializeField] Slider brightnessSlider;
@@ -49,6 +53,8 @@ public class MenuManager : MonoBehaviour
 	[SerializeField] GameObject[] menuButtons;
 
 	[SerializeField] GameObject[] settingButtons;
+
+	bool startingGame = true;
 
 
 
@@ -86,6 +92,9 @@ public class MenuManager : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
+		Cursor.visible = true;
+		Cursor.lockState = CursorLockMode.None;
+
 		Time.timeScale = 1;
 		hidePaused();
 		StartCoroutine(waitCinematic());
@@ -149,8 +158,12 @@ public class MenuManager : MonoBehaviour
 	{
 
 		//uses the p button to pause and unpause the game
-		if (Input.GetKeyDown(KeyCode.P) && canPause)
+		if ((Input.GetKeyDown(KeyCode.P) && canPause) || startingGame)
 		{
+            if (startingGame)
+            {
+				startingGame = false;
+            }
 			if (Time.timeScale == 1)
 			{
 				Time.timeScale = 0;
@@ -216,6 +229,14 @@ public class MenuManager : MonoBehaviour
 		}
 	}
 
+	public void startGame()
+    {
+		mainMenu1.SetActive(false);
+		player.SetActive(true);
+		Cursor.visible = false;
+		Cursor.lockState = CursorLockMode.Locked;
+
+	}
 	//loads inputted level
 	public void LoadLevel(string level)
 	{
@@ -406,6 +427,11 @@ public class MenuManager : MonoBehaviour
     {
 		controlsPopup.SetActive(false);
 		activate(settingButtons);
+	}
+
+	public void LoadLevel()
+	{
+		SceneManager.LoadScene("SceneClara2");
 	}
 
 }
