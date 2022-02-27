@@ -7,15 +7,25 @@ public class EndingManager : MonoBehaviour
     [SerializeField] GameObject texts;
     Animator endingAnimator;
     [SerializeField] GameObject text;
-    [SerializeField] GameObject eventSystem;
-    private MenuManager menuManager;
+
+    [SerializeField] GameObject menuManager;
+    MenuManager menu;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        menu = menuManager.GetComponent<MenuManager>();
         endingAnimator = texts.GetComponent<Animator>();
         StartCoroutine(waitAfewSeconds());
+        StartCoroutine(waitCredits());
         
+    }
+
+    IEnumerator waitCredits()
+    {
+        yield return new WaitForSeconds(23);
+        menu.startingGame = true;
+        Application.LoadLevel(Application.loadedLevel);
     }
 
     IEnumerator waitAfewSeconds()

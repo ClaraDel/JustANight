@@ -54,7 +54,9 @@ public class MenuManager : MonoBehaviour
 
 	[SerializeField] GameObject[] settingButtons;
 
-	bool startingGame = true;
+	[SerializeField] GameObject play;
+
+	public bool startingGame = true;
 
 
 
@@ -92,6 +94,7 @@ public class MenuManager : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
+		
 		Cursor.visible = true;
 		Cursor.lockState = CursorLockMode.None;
 
