@@ -30,7 +30,7 @@ public class EndingManager : MonoBehaviour
 
     IEnumerator waitAfewSeconds()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(8);
         text.SetActive(false);
         endingAnimator.SetBool("doneWaiting", true);
     }
